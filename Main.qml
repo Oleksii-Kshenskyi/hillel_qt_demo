@@ -16,19 +16,24 @@ Window {
         TextField {
             id: op1
             placeholderText: "Op 1"
+            onTextChanged: {
+                controller.setOp1(op1.text)
+            }
         }
 
         TextField {
             id: op2
             placeholderText: "Op 2"
+            onTextChanged: {
+                controller.setOp2(op2.text)
+            }
         }
 
         Button {
             text: "Op1 + Op2!"
 
             onClicked: {
-                console.log("HELLO => " + model.op1)
-                displayLabel.text = parseInt(op1.text, 10) + parseInt(op2.text, 10)
+                displayLabel.text = controller.add()
             }
         }
 
