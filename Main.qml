@@ -21,6 +21,14 @@ Window {
             }
         }
 
+        ComboBox {
+            id: operation
+            model: ["+", "-", "*", "/"]
+            onCurrentValueChanged: {
+                controller.setOperation(operation.currentValue)
+            }
+        }
+
         TextField {
             id: op2
             placeholderText: "Op 2"
@@ -33,7 +41,7 @@ Window {
             text: "Op1 + Op2!"
 
             onClicked: {
-                displayLabel.text = controller.add()
+                displayLabel.text = controller.performOperation()
             }
         }
 
