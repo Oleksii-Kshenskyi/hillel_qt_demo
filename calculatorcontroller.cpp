@@ -1,39 +1,35 @@
 #include "calculatorcontroller.h"
 
+void CalculatorController::init_registry() {
+    this->op_registry["+"] = [&]() -> double {
+        return this->model->getOp1() + this->model->getOp2();
+    };
+    this->op_registry["*"] = [&]() -> double {
+        return this->model->getOp1() * this->model->getOp2();
+    };
+    this->op_registry["-"] = [&]() -> double {
+        return this->model->getOp1() - this->model->getOp2();
+    };
+    this->op_registry["/"] = [&]() -> double {
+        return this->model->getOp1() / this->model->getOp2();
+    };
+}
+
 CalculatorController::CalculatorController(CalculatorModel* model, QObject *parent)
     : model(model) , QObject{parent}
-{}
-
-double CalculatorController::add() {
-    return this->model->getOp1() + this->model->getOp2();
-}
-
-double CalculatorController::mul() {
-    return this->model->getOp1() * this->model->getOp2();
-}
-
-double CalculatorController::sub() {
-    return this->model->getOp1() - this->model->getOp2();
-}
-
-double CalculatorController::div() {
-    return this->model->getOp1() / this->model->getOp2();
+{
+    this->init_registry();
 }
 
 double CalculatorController::performOperation() {
     QString op = this->model->getOperation();
-    if(op == "+") {
-        return this->add();
-    } else if(op == "-") {
-        return this->sub();
-    } else if(op == "*") {
-        return this->mul();
-    } else if(op == "/") {
-        return this->div();
+    if(this->op_registry.contains(op)) {
+        return this->op_registry[op]();
     } else {
         throw std::invalid_argument("ERROR: unexpected operation type (should be impossible!)");
     }
 }
+
 
 
 void CalculatorController::setOp1(QString op1_val) {

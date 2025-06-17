@@ -4,6 +4,8 @@
 #include <QObject>
 
 #include "calculatormodel.h"
+#include <map>
+#include <functional>
 
 class CalculatorController : public QObject
 {
@@ -11,10 +13,6 @@ class CalculatorController : public QObject
 public:
     explicit CalculatorController(CalculatorModel* model, QObject *parent = nullptr);
 
-    Q_INVOKABLE double add();
-    Q_INVOKABLE double mul();
-    Q_INVOKABLE double sub();
-    Q_INVOKABLE double div();
     Q_INVOKABLE double performOperation();
 
     Q_INVOKABLE void setOp1(QString op1_val);
@@ -23,6 +21,9 @@ public:
 
 private:
     CalculatorModel* model;
+    std::map<QString, std::function<double()>> op_registry;
+
+    void init_registry();
 };
 
 #endif // CALCULATORCONTROLLER_H
