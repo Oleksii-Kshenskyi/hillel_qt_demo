@@ -39,6 +39,7 @@ void CalculatorController::setOp1(QString op1_val) {
     if(ok) {
         this->model->setOp1(op1);
     }
+    this->model->setOp1Valid(ok);
 }
 
 void CalculatorController::setOp2(QString op2_val) {
@@ -48,6 +49,7 @@ void CalculatorController::setOp2(QString op2_val) {
     if(ok) {
         this->model->setOp2(op2);
     }
+    this->model->setOp2Valid(ok);
 }
 
 Q_INVOKABLE void CalculatorController::setOperation(QString op_val) {

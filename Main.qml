@@ -19,6 +19,14 @@ Window {
             onTextChanged: {
                 controller.setOp1(op1.text)
             }
+            background: Rectangle {
+                id: op1Background
+                width: op1.width
+                height: op1.height
+
+                border.color: "transparent"
+                border.width: 1
+            }
         }
 
         ComboBox {
@@ -35,9 +43,18 @@ Window {
             onTextChanged: {
                 controller.setOp2(op2.text)
             }
+            background: Rectangle {
+                id: op2Background
+                width: op2.width
+                height: op2.height
+
+                border.color: "transparent"
+                border.width: 1
+            }
         }
 
         Button {
+            id: calculateButton
             text: "Op1 + Op2!"
 
             onClicked: {
@@ -50,5 +67,20 @@ Window {
             text: "RESULT WILL BE HERE"
         }
 
+    }
+
+
+
+    Connections {
+        target: model
+        function onOp1ValidChanged(opv_new) {
+            op1Background.border.color = opv_new ? "transparent" : "red"
+            calculateButton.enabled = model.op1Valid && model.op2Valid
+        }
+
+        function onOp2ValidChanged(opv_new) {
+            op2Background.border.color = opv_new ? "transparent" : "red"
+            calculateButton.enabled = model.op1Valid && model.op2Valid
+        }
     }
 }
